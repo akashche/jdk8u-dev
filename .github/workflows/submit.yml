@@ -209,11 +209,8 @@ jobs:
           $env:BOOT_JDK = cygpath "$HOME/bootjdk/$env:BOOT_JDK_VERSION" ;
           $env:JT_HOME = cygpath "$HOME/jtreg" ;
           & bash configure
-          --with-toolchain-version=2017
           --with-conf-name=windows-x64
-          ${{ matrix.flags }}
-          --with-user-release-suffix="$env:GITHUB_ACTOR-$env:GITHUB_SHA"
-          --with-build-number=0
+          --with-toolchain-version=2017
           --with-boot-jdk="$env:BOOT_JDK"
           --with-jtreg="$env:JT_HOME" ;
           bash -c "cat config.log"
