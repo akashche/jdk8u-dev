@@ -182,6 +182,16 @@ jobs:
           path: ~/jtreg/
         if: steps.jtreg_restore.outcome == 'failure'
 
+      - name: Uninstall WinSDKs
+        run: >
+          Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
+          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
+          --remove Microsoft.VisualStudio.Component.Windows10SDK.18362
+          --remove Microsoft.VisualStudio.Component.Windows10SDK.19041
+          --remove Microsoft.VisualStudio.Component.Windows10SDK.20348
+          --remove Microsoft.VisualStudio.Component.Windows10SDK.22000
+          --quiet'
+
       - name: Download MSVS 2017 Community installer
         run: |
           curl -L "https://github.com/akashche/msvs_2017_installer_bootstrap/raw/master/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe" -o "$HOME/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe"
