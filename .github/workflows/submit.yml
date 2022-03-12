@@ -177,9 +177,6 @@ jobs:
           path: ~/jtreg/
         if: steps.jtreg_restore.outcome == 'failure'
 
-      - name: Fix OpenJDK permissions
-        run: bash -c "chmod -R 0777 jdk"
-
       - name: Download MSVS 2017 Community installer
         run: |
           curl -LO https://github.com/akashche/msvs_2017_installer_bootstrap/raw/master/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe
