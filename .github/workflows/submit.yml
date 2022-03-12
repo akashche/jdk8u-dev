@@ -188,23 +188,23 @@ jobs:
       - name: Install MSVS 2017
         run: >
           Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
-          'install --productId Microsoft.VisualStudio.Product.Community --channelId VisualStudio.15.Release --quiet'
+          'install --productId Microsoft.VisualStudio.Product.Enterprise --channelId VisualStudio.15.Release --quiet'
 
       - name: Install VC++
         run: >
           Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
-          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
+          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise"
           --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --quiet'
 
       - name: Install WinSDK
         run: >
           Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
-          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
+          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise"
           --add Microsoft.VisualStudio.Component.Windows10SDK.17763 --quiet'
 
       - name: List MSVS files
         run: >
-          Tree "C:\Program Files (x86)\Microsoft Visual Studio" /F
+          Tree "C:\Program Files (x86)\Microsoft Visual Studio\2017" /F
 
       - name: Configure
         run: >
