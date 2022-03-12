@@ -185,11 +185,22 @@ jobs:
       - name: Fix OpenJDK permissions
         run: bash -c "chmod -R 0777 jdk"
 
-      - name: Ensure a specific version of MSVC is installed
+      - name: Install MSVC 2017
         run: >
           Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
-          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise" --quiet
-          --add Microsoft.VisualStudio.Component.VC.14.28.x86.x64'
+          'install --productId Microsoft.VisualStudio.Product.Community --channelId VisualStudio.15.Release --quiet'
+
+      - name: Install VC++
+        run: >
+          Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
+          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
+          --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --quiet'
+
+      - name: Install WinSDK
+        run: >
+          Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
+          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
+          --add Microsoft.VisualStudio.Component.Windows10SDK.17763 --quiet'
 
       - name: Configure
         run: >
@@ -198,6 +209,7 @@ jobs:
           $env:BOOT_JDK = cygpath "$HOME/bootjdk/$env:BOOT_JDK_VERSION" ;
           $env:JT_HOME = cygpath "$HOME/jtreg" ;
           & bash configure
+          --with-toolchain-version=2017
           --with-conf-name=windows-x64
           ${{ matrix.flags }}
           --with-user-release-suffix="$env:GITHUB_ACTOR-$env:GITHUB_SHA"
