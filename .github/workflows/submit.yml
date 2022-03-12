@@ -188,15 +188,15 @@ jobs:
 
       - name: Install VC++
         run: >
-          Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
+          Start-Process -FilePath 'C:\Users\runneradmin\vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe' -Wait -NoNewWindow -ArgumentList
           'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
-          --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --quiet'
+          --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --quiet --wait'
 
       - name: Install WinSDK
         run: >
-          Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
+          Start-Process -FilePath 'C:\Users\runneradmin\vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe' -Wait -NoNewWindow -ArgumentList
           'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
-          --add Microsoft.VisualStudio.Component.Windows10SDK.17763 --quiet'
+          --add Microsoft.VisualStudio.Component.Windows10SDK.17763 --quiet --wait'
 
       - name: List MSVS files
         run: >
