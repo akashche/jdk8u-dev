@@ -145,11 +145,6 @@ jobs:
           & curl -L "https://www.cygwin.com/setup-x86_64.exe" -o "$HOME/cygwin/setup-x86_64.exe"
           Start-Process -FilePath "$HOME\cygwin\setup-x86_64.exe" -ArgumentList "--quiet-mode --packages autoconf,make,zip,unzip --root $HOME\cygwin\cygwin64 --local-package-dir $HOME\cygwin\packages --site http://mirrors.kernel.org/sourceware/cygwin --no-desktop --no-shortcuts --no-startmenu --no-admin" -Wait -NoNewWindow
 
-      - name: Checkout the source
-        uses: actions/checkout@v2
-        with:
-          path: jdk
-
       - name: Restore boot JDK from cache
         id: bootjdk
         uses: actions/cache@v2
@@ -185,21 +180,25 @@ jobs:
       - name: Fix OpenJDK permissions
         run: bash -c "chmod -R 0777 jdk"
 
+      - name: Download MSVS 2017 Community installer
+        run: |
+          curl -LO https://github.com/akashche/msvs_2017_installer_bootstrap/raw/master/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe
+
       - name: Install MSVS 2017
         run: >
-          Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
-          'install --productId Microsoft.VisualStudio.Product.Enterprise --channelId VisualStudio.15.Release --quiet'
+          Start-Process -FilePath 'C:\Users\runneradmin\vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe' -Wait -NoNewWindow -ArgumentList
+          'install --productId Microsoft.VisualStudio.Product.Community --channelId VisualStudio.15.Release --quiet --wait'
 
       - name: Install VC++
         run: >
           Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
-          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise"
+          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
           --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --quiet'
 
       - name: Install WinSDK
         run: >
           Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
-          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise"
+          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
           --add Microsoft.VisualStudio.Component.Windows10SDK.17763 --quiet'
 
       - name: List MSVS files
