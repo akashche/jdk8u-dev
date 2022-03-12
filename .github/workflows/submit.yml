@@ -180,7 +180,8 @@ jobs:
       - name: Uninstall MSVS 2019
         run: >
           Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
-          'uninstall --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise" --quiet'
+          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise" --quiet
+          --remove Microsoft.VisualStudio.Component.Windows10SDK.20348'
 
       - name: Download MSVS 2017 Community installer
         run: |
