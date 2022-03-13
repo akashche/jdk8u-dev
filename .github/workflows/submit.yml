@@ -234,8 +234,6 @@ jobs:
           --with-boot-jdk="$env:BOOT_JDK"
           --with-freetype-src="$env:FREETYPE_HOME"
           --with-jtreg="$env:JT_HOME" ;
-          bash -c "cat freetype.log" ;
-          bash -c "cat config.log"
         working-directory: jdk
 
       - name: Build
