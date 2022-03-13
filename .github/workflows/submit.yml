@@ -201,8 +201,7 @@ jobs:
 
       - name: Download MSVS 2017 Community installer
         run: |
-          curl -L "https://github.com/akashche/msvs_2017_installer_bootstrap/raw/master/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe"
-          -o "$HOME/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe"
+          curl -L "https://github.com/akashche/msvs_2017_installer_bootstrap/raw/master/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe" -o "$HOME/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe"
 
       - name: Install MSVS 2017
         run: >
