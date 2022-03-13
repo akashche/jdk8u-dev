@@ -1,6 +1,6 @@
 @echo off
 
-@echo "OpenJDK 8 Github Actions env"
+@echo "OpenJDK 8u Github Actions environment setup"
 
 rem tools dirs
 set VSINSTALLDIR=C:/Program Files (x86)/Microsoft Visual Studio/2017/Community
@@ -50,3 +50,4 @@ set PATH=%VSINSTALLDIR%/VC/Tools/MSVC/14.16.27023/bin/HostX64/x64
 set PATH=%PATH%;%WindowsSdkDir%/bin/10.0.17763.0/x64;%VSINSTALLDIR%/Common7/Tools/;%VSINSTALLDIR%/VC/Redist/MSVC/14.16.27012/x64/Microsoft.VC141.CRT/
 set PATH=%PATH%;%WindowsSdkDir%/Redist/10.0.17763.0/ucrt/DLLs/x64;%WindowsSdkDir%/Redist/10.0.17763.0/ucrt/DLLs/x86;
 set PATH=%PATH%;C:/Windows/system32;C:/Windows;C:/Windows/System32/Wbem
+set PATH=%PATH%;c:/Users/runneradmin/cygwin/cygwin64/bin
