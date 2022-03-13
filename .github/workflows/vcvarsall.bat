@@ -1,10 +1,10 @@
-@echo on
+@echo off
 
 @echo "OpenJDK 8 Github Actions env"
 
 rem tools dirs
-set VSINSTALLDIR="C:/Program Files (x86)/Microsoft Visual Studio/2017/Community"
-set WindowsSdkDir="C:/Program Files (x86)/Windows Kits/10"
+set VSINSTALLDIR=C:/Program Files (x86)/Microsoft Visual Studio/2017/Community
+set WindowsSdkDir=C:/Program Files (x86)/Windows Kits/10
 
 rem set compiler environment manually
 set DevEnvDir=%VSINSTALLDIR%/Common7/IDE/
