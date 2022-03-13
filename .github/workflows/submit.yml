@@ -229,6 +229,10 @@ jobs:
           $env:WindowsSdkVerBinPath = "$env:WindowsSdkDir\bin\10.0.17763.0\" ;
           $env:WindowsSDKLibVersion = "10.0.17763.0\" ;
           $env:WindowsSDKVersion = "10.0.17763.0\" ;
+          $env:Path = "$env:VSINSTALLDIR\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64" ;
+          $env:Path = "$env:Path;%WindowsSdkDir%\bin\10.0.17763.0\x64;$env:VSINSTALLDIR\Common7\Tools\;$env:VSINSTALLDIR\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\" ;
+          $env:Path = "$env:Path;%WindowsSdkDir%\Redist\10.0.17763.0\ucrt\DLLs\x64;%WindowsSdkDir%\Redist\10.0.17763.0\ucrt\DLLs\x86;" ;
+          $env:Path = "$env:Path;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem" ;
           $env:Path = "$HOME\cygwin\cygwin64\bin;$HOME\cygwin\cygwin64\bin;$env:Path" ;
           $env:Path = $env:Path -split ";" -match "C:\\Windows|PowerShell|cygwin" -join ";" ;
           $env:BOOT_JDK = cygpath "$HOME/bootjdk/$env:BOOT_JDK_VERSION" ;
