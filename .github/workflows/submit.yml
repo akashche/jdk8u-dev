@@ -199,39 +199,12 @@ jobs:
 
       - name: Disable MSVS env discovery
         run: >
-          Remove-Item 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat'
+          Remove-Item "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" ;
+          Copy-Item -Path "$env:GITHUB_WORKSPACE\jdk\.github\workflows\vcvarsall.bat"
+          -Destination "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" ;
 
       - name: Configure
         run: >
-          $env:VSINSTALLDIR = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community" ;
-          $env:WindowsSdkDir = "C:\Program Files (x86)\Windows Kits\10" ;
-          $env:DevEnvDir = "$env:VSINSTALLDIR\Common7\IDE\" ;
-          $env:ExtensionSdkDir = "$env:WindowsSdkDir\ExtensionSDKs" ;
-          $env:INCLUDE = "$env:VSINSTALLDIR\VC\Tools\MSVC\14.16.27023\include;$env:WindowsSdkDir\include\10.0.17763.0\ucrt;" ;
-          $env:INCLUDE = "$env:INCLUDE;$env:WindowsSdkDir\include\10.0.17763.0\shared;$env:WindowsSdkDir\include\10.0.17763.0\um;$env:WindowsSdkDir\include\10.0.17763.0\winrt;" ;
-          $env:LIB = "$env:VSINSTALLDIR\VC\Tools\MSVC\14.16.27023\lib\x64;$env:WindowsSdkDir\lib\10.0.17763.0\ucrt\x64;$env:WindowsSdkDir\lib\10.0.17763.0\um\x64;" ;
-          $env:LIBPATH = "$env:VSINSTALLDIR\VC\Tools\MSVC\14.16.27023\lib\x64;$env:VSINSTALLDIR\VC\Tools\MSVC\14.16.27023\lib\x86\store\references;" ;
-          $env:LIBPATH = "$env:LIBPATH;$env:WindowsSdkDir\UnionMetadata;$env:WindowsSdkDir\References;" ;
-          $env:Platform = "x64" ;
-          $env:PROCESSOR_ARCHITECTURE = "AMD64" ;
-          $env:VCIDEInstallDir = "$env:VSINSTALLDIR\Common7\IDE\VC\" ;
-          $env:VCINSTALLDIR = "$env:VSINSTALLDIR\VC\" ;
-          $env:VCToolsInstallDir = "$env:VSINSTALLDIR\VC\Tools\MSVC\14.16.27023\" ;
-          $env:VCToolsRedistDir = "$env:VSINSTALLDIR\VC\Redist\MSVC\14.16.27012\" ;
-          $env:VCToolsVersion = "14.16.27023" ;
-          $env:VisualStudioVersion = "15.0" ;
-          $env:VSCMD_ARG_app_plat = "Desktop" ;
-          $env:VSCMD_ARG_HOST_ARCH = "x64" ;
-          $env:VSCMD_ARG_TGT_ARCH = "x64" ;
-          $env:VSCMD_VER = "15.0" ;
-          $env:WindowsSdkBinPath = "$env:WindowsSdkDir\bin\" ;
-          $env:WindowsSdkVerBinPath = "$env:WindowsSdkDir\bin\10.0.17763.0\" ;
-          $env:WindowsSDKLibVersion = "10.0.17763.0\" ;
-          $env:WindowsSDKVersion = "10.0.17763.0\" ;
-          $env:Path = "$env:VSINSTALLDIR\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64" ;
-          $env:Path = "$env:Path;%WindowsSdkDir%\bin\10.0.17763.0\x64;$env:VSINSTALLDIR\Common7\Tools\;$env:VSINSTALLDIR\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\" ;
-          $env:Path = "$env:Path;%WindowsSdkDir%\Redist\10.0.17763.0\ucrt\DLLs\x64;%WindowsSdkDir%\Redist\10.0.17763.0\ucrt\DLLs\x86;" ;
-          $env:Path = "$env:Path;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem" ;
           $env:Path = "$HOME\cygwin\cygwin64\bin;$HOME\cygwin\cygwin64\bin;$env:Path" ;
           $env:Path = $env:Path -split ";" -match "C:\\Windows|PowerShell|cygwin" -join ";" ;
           $env:BOOT_JDK = cygpath "$HOME/bootjdk/$env:BOOT_JDK_VERSION" ;
