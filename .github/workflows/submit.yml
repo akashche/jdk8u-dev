@@ -220,7 +220,6 @@ jobs:
           $env:VCToolsRedistDir = "$env:VSINSTALLDIR\VC\Redist\MSVC\14.16.27012\" ;
           $env:VCToolsVersion = "14.16.27023" ;
           $env:VisualStudioVersion = "15.0" ;
-          $env:VS150COMNTOOLS = "$env:VSINSTALLDIR\Common7\Tools\" ;
           $env:VSCMD_ARG_app_plat = "Desktop" ;
           $env:VSCMD_ARG_HOST_ARCH = "x64" ;
           $env:VSCMD_ARG_TGT_ARCH = "x64" ;
