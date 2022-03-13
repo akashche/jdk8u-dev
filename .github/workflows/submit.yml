@@ -205,8 +205,8 @@ jobs:
         run: >
           $env:VSINSTALLDIR = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community" ;
           $env:WindowsSdkDir = "C:\Program Files (x86)\Windows Kits\10" ;
-          $env:DevEnvDir = "$env:VSINSTALLDIR\Common7\IDE\"
-          $env:ExtensionSdkDir = "$env:WindowsSdkDir\ExtensionSDKs"
+          $env:DevEnvDir = "$env:VSINSTALLDIR\Common7\IDE\" ;
+          $env:ExtensionSdkDir = "$env:WindowsSdkDir\ExtensionSDKs" ;
           $env:INCLUDE = "$env:VSINSTALLDIR\VC\Tools\MSVC\14.16.27023\include;$env:WindowsSdkDir\include\10.0.17763.0\ucrt;" ;
           $env:INCLUDE = "$env:INCLUDE;$env:WindowsSdkDir\include\10.0.17763.0\shared;$env:WindowsSdkDir\include\10.0.17763.0\um;$env:WindowsSdkDir\include\10.0.17763.0\winrt;" ;
           $env:LIB = "$env:VSINSTALLDIR\VC\Tools\MSVC\14.16.27023\lib\x64;$env:WindowsSdkDir\lib\10.0.17763.0\ucrt\x64;$env:WindowsSdkDir\lib\10.0.17763.0\um\x64;" ;
