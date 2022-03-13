@@ -107,6 +107,13 @@ jobs:
           path: ~/jtreg/
         if: steps.check_submit.outputs.should_run != 'false'
 
+      - name: Checkout the FreeType source
+        uses: actions/checkout@v2
+        with:
+          repository: "freetype/freetype"
+          ref: VER-2-8-1
+          path: freetype
+
   windows_x64_build:
     name: Windows x64
     runs-on: "windows-2019"
@@ -182,34 +189,43 @@ jobs:
           path: ~/jtreg/
         if: steps.jtreg_restore.outcome == 'failure'
 
+      - name: Uninstall WinSDKs
+        run: >
+          Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe' -Wait -NoNewWindow -ArgumentList
+          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
+          --remove Microsoft.VisualStudio.Component.Windows10SDK.18362
+          --remove Microsoft.VisualStudio.Component.Windows10SDK.19041
+          --remove Microsoft.VisualStudio.Component.Windows10SDK.20348
+          --remove Microsoft.VisualStudio.Component.Windows10SDK.22000
+          --quiet'
+
       - name: Download MSVS 2017 Community installer
         run: |
-          curl -L "https://github.com/akashche/msvs_2017_installer_bootstrap/raw/master/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe" -o "$HOME/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe"
+          curl -L "https://github.com/akashche/msvs_2017_installer_bootstrap/raw/master/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe"
+          -o "$HOME/vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe"
 
       - name: Install MSVS 2017
         run: >
           Start-Process -FilePath 'C:\Users\runneradmin\vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe' -Wait -NoNewWindow -ArgumentList
-          'install --productId Microsoft.VisualStudio.Product.Community --channelId VisualStudio.15.Release --quiet --wait'
+          'install --productId Microsoft.VisualStudio.Product.Community --channelId VisualStudio.15.Release
+          --add Microsoft.VisualStudio.Workload.NativeDesktop
+          --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64
+          --add Microsoft.VisualStudio.Component.Windows10SDK.17763
+          --quiet --wait'
 
-      - name: Install VC++
+      - name: Copy FreeType project file
         run: >
-          Start-Process -FilePath 'C:\Users\runneradmin\vs_community__7955ddbf8a9b49dda0f8d18876e93bd2.exe' -Wait -NoNewWindow -ArgumentList
-          'modify --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
-          --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --quiet --wait'
-
-      - name: Disable MSVS env discovery
-        run: >
-          Remove-Item "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" ;
-          Copy-Item -Path "$env:GITHUB_WORKSPACE\jdk\.github\workflows\vcvarsall.bat"
-          -Destination "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" ;
+          Remove-Item "$env:GITHUB_WORKSPACE\freetype\builds\windows\vc2010\freetype.vcxproj" ;
+          Copy-Item -Path "$env:GITHUB_WORKSPACE\jdk\.github\workflows\freetype.vcxproj"
+          -Destination "$env:GITHUB_WORKSPACE\freetype\builds\windows\vc2010\freetype.vcxproj" ;
 
       - name: Configure
         run: >
           $env:Path = "$HOME\cygwin\cygwin64\bin;$HOME\cygwin\cygwin64\bin;$env:Path" ;
           $env:Path = $env:Path -split ";" -match "C:\\Windows|PowerShell|cygwin" -join ";" ;
           $env:BOOT_JDK = cygpath "$HOME/bootjdk/$env:BOOT_JDK_VERSION" ;
+          $env:FREETYPE_HOME = cygpath "$HOME/freetype" ;
           $env:JT_HOME = cygpath "$HOME/jtreg" ;
-          dir env: ;
           & bash configure
           --with-toolchain-version=2017
           --with-conf-name=windows-x64
@@ -217,6 +233,7 @@ jobs:
           --with-user-release-suffix="$env:GITHUB_ACTOR-$env:GITHUB_SHA"
           --with-build-number=0
           --with-boot-jdk="$env:BOOT_JDK"
+          --with-freetype-src="$env:FREETYPE_HOME"
           --with-jtreg="$env:JT_HOME" ;
           bash -c "cat config.log"
         working-directory: jdk
